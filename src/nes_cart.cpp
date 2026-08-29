@@ -45,7 +45,7 @@ void nes_cart::allocateBanks(unsigned char* staticAlloced) {
 		unsigned char* heapBank = (unsigned char*) malloc(8192);
 		if (heapBank) {
 			cache[i].ptr = heapBank;
-			allocatedROMBanks = i;
+			allocatedROMBanks = i + 1;
 		} else {
 			break;
 		}
