@@ -804,8 +804,24 @@ void nes_frontend::Run() {
 	} while (true);
 }
 
+#define HIST_SIZE 64
+static unsigned int histPC[HIST_SIZE];
+static unsigned int histSP[HIST_SIZE];
+static int histPos = 0;
+
+void DumpHistory() {
+	fprintf(stderr, "--- last %d instructions ---\n", HIST_SIZE);
+	for (int i = 0; i < HIST_SIZE; i++) {
+		int n = (histPos + i) % HIST_SIZE;
+		fprintf(stderr, "%2d  PC %04X  SP %04X\n", i, histPC[n], histSP[n]);
+	}
+}
+
 void nes_frontend::RunGameLoop() {
 	while (!shouldExit) {
+    histPC[histPos] = mainCPU.PC;
+		histSP[histPos] = mainCPU.SP;
+		histPos = (histPos + 1) % HIST_SIZE;
 		cpu6502_Step();
 		if (mainCPU.clocks >= mainCPU.ppuClocks) nesPPU.step();
 		if (mainCPU.clocks >= mainCPU.apuClocks) nesAPU.step();

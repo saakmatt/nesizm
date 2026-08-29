@@ -2,10 +2,10 @@
 
 #if DEBUG
 
-#include "scope_timer\scope_timer.h"
+#include "scope_timer/scope_timer.h"
 
 #if TARGET_WINSIM
-#include <Windows.h>
+#include "linux_compat.h"
 
 // debug mem writes to this address (Slow. in WinSim will spit out the last 50 instructions, their address, the contents of the registers and the 8 bytes before and after the given address)
 #define DEBUG_MEMWRITE 0
@@ -17,7 +17,7 @@ void failedAssert(const char* assertion);
 #if DEBUG_MEMWRITE
 extern unsigned short debugWriteAddress;
 extern void HitMemAccess();
-#define DEBUG_TRACKINSTRUCTIONS 32
+#define DEBUG_TRACKINSTRUCTIONS 1
 #define DebugWrite(address) { if (debugWriteAddress && address == debugWriteAddress) { HitMemAccess(); } }
 #endif
 

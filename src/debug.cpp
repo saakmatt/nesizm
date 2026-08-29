@@ -1,8 +1,6 @@
 #include "platform.h"
 #include "debug.h"
 
-#include "calctype/fonts/arial_small/arial_small.h"
-
 #if DEBUG_MEMWRITE
 unsigned short debugWriteAddress = 0;
 #endif
@@ -16,21 +14,20 @@ void reset_printf() {
 	printY = 0;
 }
 
-void ScreenPrint(char* buffer) {
-	int x = 5;
-	bool newline = buffer[strlen(buffer) - 1] == '\n';
-	if (newline) buffer[strlen(buffer) - 1] = 0;
-	CalcType_Draw(&arial_small, buffer, x, printY + 2, COLOR_WHITE, 0, 0);
-	printY = (printY + arial_small.height) % 224;
+void ScreenPrint(const char* buffer) {
+	fprintf(stderr, "%s\n", buffer);
 }
 
 #if DEBUG
 #define BORDER "<><><><><><><><><><><><><><><><><><><><>\n"
 
+extern void DumpHistory();
+
 void failedAssert(const char* assertion) {
 	OutputLog("Failed assert:\n");
 	OutputLog(assertion);
 	OutputLog("\n");
+  DumpHistory();
 
 #if TARGET_WINSIM
 	DebugBreak();

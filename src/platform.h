@@ -4,13 +4,13 @@
 #include "string.h"
 #include "stdlib.h"
 
-#include "fxcg\display.h"
-#include "fxcg\keyboard.h"
-#include "fxcg\file.h"
-#include "fxcg\registers.h"
-#include "fxcg\rtc.h"
-#include "fxcg\system.h"
-#include "fxcg\serial.h"
+#include "fxcg/display.h"
+#include "fxcg/keyboard.h"
+#include "fxcg/file.h"
+#include "fxcg/registers.h"
+#include "fxcg/rtc.h"
+#include "fxcg/system.h"
+#include "fxcg/serial.h"
 
 typedef signed char int8;
 typedef unsigned char uint8;
@@ -22,8 +22,8 @@ typedef unsigned int uint32;
 #if TARGET_WINSIM
 #define ALIGN(x) alignas(x)
 #define LITTLE_E
-#define FORCE_INLINE __forceinline
-#define RESTRICT __restrict
+#define FORCE_INLINE inline
+#define RESTRICT __restrict__
 #include <time.h>
 #undef LoadImage
 
@@ -41,7 +41,7 @@ extern "C" {
 #include "fxcg_registers.h"
 #define nullptr NULL
 
-#include "fxcg\heap.h"
+#include "fxcg/heap.h"
 #define malloc sys_malloc
 #define calloc sys_calloc
 #define realloc sys_realloc
